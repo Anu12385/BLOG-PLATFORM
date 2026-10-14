@@ -1,9 +1,9 @@
 import { Hono } from 'hono'
 import { getPrisma } from '../db'
 import { sign ,verify} from 'hono/jwt'
-import { JWT_SECRET } from '../config'
 import { signupinput,signininput } from 'anu089-medium'
 
+import { hashedpass,verifypass } from '../password'
 export const userRouter = new Hono<{
     Bindings: {
         DATABASE_URL: string;
@@ -20,20 +20,21 @@ userRouter.post('/signup', async (c) => {
             message: "Inputs not correct"
         })
     }
+    const passwordHash=await hashedpass(body.password);
     const prisma = getPrisma(c.env.DATABASE_URL);
-  
+    
     try {
       const user = await prisma.user.create({
         data: {
           email: body.email,
-          password: body.password,
+          password: passwordHash,
           name: body.name
         }
       })
       console.log("USER IS CREATED ");
       const jwt = await sign({
         id: user.id
-      }, JWT_SECRET.JWT_SECRET);
+      }, c.env.JWT_SECRET);
   
       return c.text(jwt)
     } catch(e) {
@@ -60,18 +61,17 @@ userRouter.post('/signup', async (c) => {
       const user = await prisma.user.findFirst({
         where: {
           email: body.email,
-          password: body.password
         }
       })
-      if (!user) {
+      if (!user || !(verifypass(body.password,user.password))) {
         c.status(403);
         return c.json({
-          message: "Incorrect creds"
-        })
+          message: "Invalid email or Invalid password"
+        },401)
       }
       const jwt = await sign({
         id: user.id
-      }, JWT_SECRET.JWT_SECRET);
+      }, c.env.JWT_SECRET);
   
       return c.text(jwt)
     } catch(e) {

@@ -1,7 +1,6 @@
 import { Hono } from 'hono'
 import { getPrisma } from '../db'
 import { sign, verify } from 'hono/jwt'
-import { JWT_SECRET } from '../config'
 import { Updatabloginput, createbloginput } from 'anu089-medium'
 
 export const blogRouter = new Hono<{
@@ -25,7 +24,7 @@ blogRouter.use("/*", async (c, next) => {
     });
   }
   const token =  data.split(" ")[1];
-  const verified: any = await verify(token, JWT_SECRET.JWT_SECRET, "HS256")
+  const verified: any = await verify(token, c.env.JWT_SECRET, "HS256")
 
   if (verified) {
     const store = verified.id;

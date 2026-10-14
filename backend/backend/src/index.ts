@@ -1,7 +1,6 @@
 import { Hono } from 'hono'
 import { getPrisma } from './db'
 import { sign ,verify} from 'hono/jwt'
-import { JWT_SECRET } from './config'
 import {userRouter} from './routes/user'
 import {blogRouter} from './routes/blog'
 import { cors } from 'hono/cors'
