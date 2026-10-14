@@ -1,0 +1,16 @@
+{
+  "name": "anu089-medium",
+  "version": "3.0.7",
+  "description": "",
+  "main": "dist/zod.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "zod": "^4.5.4"
+  }
+}

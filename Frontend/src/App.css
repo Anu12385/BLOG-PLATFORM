@@ -1,0 +1,73 @@
+
+/* Webflow style */
+
+.webflow-style-input {
+    position: relative;
+    display: flex;
+    width: 100%;
+    border-radius: 2px;
+    padding: 14px 20px 16px;
+    background: rgba(0, 1, 1, 0.8);
+    border-radius: 15%;
+}
+
+.webflow-style-input::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 2px;
+
+
+    background: linear-gradient(
+        to right,
+        #672cfc,
+        #13ebeb,
+        #f4f82d,
+        #21eded,
+        #6a32f9,
+        #16e0e0
+    );
+
+    background-size: 500% auto;
+
+    animation: gradient 3s linear infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+.webflow-style-input input {
+    flex-grow: 1;
+
+    color: #02050c;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.webflow-style-input input::placeholder {
+    color: #7881a1;
+}
+
+.webflow-style-input button {
+    color: #7881a1;
+    font-size: 24px;
+    line-height: 24px;
+
+    cursor: pointer;
+
+    transition: color 0.25s;
+}
+
+.webflow-style-input button:hover {
+    color: #bfd2ff;
+}
